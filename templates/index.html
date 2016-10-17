@@ -1,0 +1,32 @@
+<html>
+
+  <head>
+
+    <!-- General settings -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Awesome Blog!</title>
+
+    <!-- CSS -->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.2.1/material.deep_purple-deep_orange.min.css">
+    <link rel="stylesheet" href="static/styles/login.css">
+
+  </head>
+
+  <body>
+
+    Esse vai ser nossa página principal, por enquanto ainda não temos conteúdo =/
+
+    <br>
+
+    {% if logado == True %}
+    Usuário está logado!
+    {% else %}
+    Usuário não está logado!
+    {% endif %}
+
+    <script src="https://storage.googleapis.com/code.getmdl.io/1.2.1/material.min.js"></script>
+  </body>
+</html>

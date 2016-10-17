@@ -1,0 +1,13 @@
+html, body {
+  font-family: 'Roboto', 'Helvetica', sans-serif;
+}
+
+.mdl-layout {
+  align-items: center;
+  justify-content: center;
+}
+
+.mdl-layout__content {
+  padding: 24px;
+  flex: none;
+}
