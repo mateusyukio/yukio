@@ -40,7 +40,15 @@
             </div>
             <div class="mdl-card__actions mdl-card--border">
               <button type="submit" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Cadastrar</button>
+              <button id="button" type="button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Fazer Login</button>
+              <script>
+              	var botao= document.getElementById("button");
+              	botao.onclick =function(){
+              		window.location.href = "login"
+              	}
+              </script>
             </div>
+            
           </form>
         </div>
       </main>

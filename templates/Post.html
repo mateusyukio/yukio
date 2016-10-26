@@ -21,34 +21,23 @@
       <main class="mdl-layout__content">
         <div class="mdl-card mdl-shadow--6dp">
           <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
-            <h2 class="mdl-card__title-text">Login</h2>
+            <h2 class="mdl-card__title-text">Postar</h2>
           </div>
           <form method="post">
             <div class="mdl-card__supporting-text">
               <div class="mdl-textfield mdl-js-textfield">
-                <input class="mdl-textfield__input" type="text" id="username" name="username">
-                <label class="mdl-textfield__label" for="username">Usuário</label>
-                {% if error == True %}
-                <span class="mdl-textfield__error" style="visibility: visible">Usuário ou senha inválidos!</span>
-                {% endif %}
+                <input class="mdl-textfield__input" type="text" id="titulo" name="titulo">
+                <label class="mdl-textfield__label" for="titulo">Titulo</label>
+                
               </div>
               <div class="mdl-textfield mdl-js-textfield">
-                <input class="mdl-textfield__input" type="password" id="password" name="password">
-                <label class="mdl-textfield__label" for="userpass">Senha</label>
-                {% if error == True %}
-                <span class="mdl-textfield__error" style="visibility: visible">Usuário ou senha inválidos!</span>
-                {% endif %}
+                <input class="mdl-textfield__input" type="text" id="mensagem" name="mensagem">
+                <label class="mdl-textfield__label" for="mensagem">Mensagem</label>
+               
               </div>
             </div>
             <div class="mdl-card__actions mdl-card--border">
-              <button type="submit" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Logar</button>
-              <button id="button" type="button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Fazer SignUp</button>
-              <script>
-              	var botao= document.getElementById("button");
-              	botao.onclick =function(){
-              		window.location.href = "signup"
-              	}
-              </script>
+              <button type="submit" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Postar</button>
             </div>
           </form>
         </div>

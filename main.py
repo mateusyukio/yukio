@@ -68,6 +68,10 @@ class User(ndb.Model):
   password = ndb.StringProperty(required = True)
   created_at = ndb.DateTimeProperty(auto_now_add = True)
 
+class Postar(ndb.Model):
+  titulo = ndb.StringProperty(required = True)
+  menssagem = ndb.StringProperty(required = True)
+
 
 
 # Default Handler
@@ -94,7 +98,6 @@ class MainHandler(Handler):
     else:
       self.render("index.html", logado = False)
 
-
 class LoginHandler(Handler):
   def get(self):
     self.render("login.html")
@@ -105,7 +108,7 @@ class LoginHandler(Handler):
     user = User.query(User.username == username).get()
     if user and valid_pw(username, password, user.password):
       self.response.headers.add_header('Set-Cookie', 'user_id=%s; Path=/' % make_secure_val(str(username)))
-      self.redirect("/")
+      self.redirect("Postar")
     else:
       self.render("login.html", error = True)
 
@@ -123,12 +126,34 @@ class SignupHandler(Handler):
       password = make_pw_hash(username, password)
     )
     user.put()
+    self.redirect("login")
+
+class PostHandler(Handler):
+  def get(self):
+    user_id = self.request.cookies.get("user_id")
+    if user_id and check_secure_val(user_id):
+      self.render("Post.html")
+    else:
+      self.redirect("/")
+
+  def post(self):
+    user_id = self.request.cookies.get("user_id")
+    if user_id and check_secure_val(user_id):
+      titulo = self.request.get("titulo")
+      mensagem = self.request.get("mensagem")
+      Postar = Postar (
+        titulo = titulo,
+        mensagem = mensagem
+      )
+      Postar.put()
+    self.redirect("/")
 
 
 app = webapp2.WSGIApplication([
   ('/', MainHandler),
   ('/login', LoginHandler),
-  ('/signup', SignupHandler)
+  ('/signup', SignupHandler),
+  ('/Postar', PostHandler)
 ])
 
 
