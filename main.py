@@ -51,9 +51,10 @@ def make_secure_val(s):
     return "%s|%s" % (s, hash_str(s))
 
 def check_secure_val(h):
+  if h:
     val = h.split('|')[0]
     if h == make_secure_val(val):
-        return val
+      return val
 
 # Jinja2 Directory Configuration
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
@@ -69,8 +70,9 @@ class User(ndb.Model):
   created_at = ndb.DateTimeProperty(auto_now_add = True)
 
 class Postar(ndb.Model):
+  usuario = ndb.StringProperty(required = True)
   titulo = ndb.StringProperty(required = True)
-  menssagem = ndb.StringProperty(required = True)
+  mensagem = ndb.StringProperty(required = True)
 
 
 
@@ -93,10 +95,11 @@ class Handler(webapp2.RequestHandler):
 class MainHandler(Handler):
   def get(self):
     user_id = self.request.cookies.get("user_id")
+    posts = Postar.query().fetch()
     if user_id and check_secure_val(user_id):
-      self.render("index.html", logado = True)
+      self.render("index.html", logado = True, posts = posts)
     else:
-      self.render("index.html", logado = False)
+      self.render("index.html", logado = False, posts = posts)
 
 class LoginHandler(Handler):
   def get(self):
@@ -108,7 +111,7 @@ class LoginHandler(Handler):
     user = User.query(User.username == username).get()
     if user and valid_pw(username, password, user.password):
       self.response.headers.add_header('Set-Cookie', 'user_id=%s; Path=/' % make_secure_val(str(username)))
-      self.redirect("Postar")
+      self.redirect("/Postar")
     else:
       self.render("login.html", error = True)
 
@@ -126,7 +129,7 @@ class SignupHandler(Handler):
       password = make_pw_hash(username, password)
     )
     user.put()
-    self.redirect("login")
+    self.redirect("/login")
 
 class PostHandler(Handler):
   def get(self):
@@ -138,14 +141,17 @@ class PostHandler(Handler):
 
   def post(self):
     user_id = self.request.cookies.get("user_id")
-    if user_id and check_secure_val(user_id):
+    user = check_secure_val(user_id)
+    if user_id and user:
+      usuario = user
       titulo = self.request.get("titulo")
       mensagem = self.request.get("mensagem")
-      Postar = Postar (
+      postar = Postar(
+        usuario = usuario,
         titulo = titulo,
         mensagem = mensagem
       )
-      Postar.put()
+      postar.put()
     self.redirect("/")
 
 
